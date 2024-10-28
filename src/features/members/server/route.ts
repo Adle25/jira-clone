@@ -121,7 +121,7 @@ const app = new Hono()
             const allMembersInWorkspace = await databases.listDocuments(
                 DATABASE_ID,
                 MEMBERS_ID,
-                [Query.equal("workpsaceId", memberToUpdate.workspaceId)]
+                [Query.equal("workspaceId", memberToUpdate.workspaceId)]
             );
 
             const member = await getMember({
