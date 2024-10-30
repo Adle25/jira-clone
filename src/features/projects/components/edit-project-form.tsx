@@ -19,6 +19,7 @@ import { Project } from "../types";
 import { useUpdateProject } from "../api/use-update-project";
 import { useConfirm } from "@/hooks/use-confirm";
 import { toast } from "sonner";
+import { useDeleteProject } from "../api/use-delete-project";
 
 interface EditProjectFormProps {
     onCancel?: () => void;
@@ -35,7 +36,7 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProp
     );
 
     const { mutate, isPending } = useUpdateProject();
-    // const { mutate: deleteWorkspace, isPending: isDeletingWorkspace } = useDeleteWorkspace();
+    const { mutate: deleteProject, isPending: isDeletingProject } = useDeleteProject();
 
     const inputRef = useRef<HTMLInputElement>(null);
 
@@ -65,13 +66,13 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProp
 
         if (!ok) return;
 
-        //     deleteWorkspace({
-        //         param: { workspaceId: initialValues.$id },
-        //     }, {
-        //         onSuccess: () => {
-        //             window.location.href = "/";
-        //         }
-        //     });
+        deleteProject({
+            param: { projectId: initialValues.$id },
+        }, {
+            onSuccess: () => {
+                window.location.href = `/workspaces/${initialValues.workspaceId}`;
+            }
+        });
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -173,7 +174,7 @@ export const EditProjectForm = ({ onCancel, initialValues }: EditProjectFormProp
                         <h3 className="font-bold">Danger Zone</h3>
                         <p className="text-sm text-muted-foreground">Deleting a project is irreversible and will remove all associated data</p>
                         <DottedSeparator className="py-7" />
-                        <Button className="mt-6 w-fit ml-auto" size="sm" variant="destructive" type="button" disabled={isPending} onClick={handleDelete}>
+                        <Button className="mt-6 w-fit ml-auto" size="sm" variant="destructive" type="button" disabled={isPending || isDeletingProject} onClick={handleDelete}>
                             Delete Project
                         </Button>
                     </div>
