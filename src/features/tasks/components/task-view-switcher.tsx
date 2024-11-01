@@ -8,15 +8,26 @@ import { useCreateTaskModal } from "../hooks/use-create-task-modal";
 import { useGetTasks } from "../api/use-get-tasks";
 import { useWorkspaceId } from "@/features/workspaces/hooks/use-workspace-id";
 import { useQueryState } from "nuqs";
+import { DataFilters } from "./data-filters";
+import { useTaskFilters } from "../hooks/use-task-filters";
 
 export const TaskViewSwitcher = () => {
     const [view, setView] = useQueryState("task-view", {
         defaultValue: "table"
     });
 
+    const [{
+        status,
+        assigneeId,
+        projectId,
+        dueDate
+    }] = useTaskFilters();
+
     const workspaceId = useWorkspaceId();
     const { open } = useCreateTaskModal();
-    const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({ workspaceId });
+    const { data: tasks, isLoading: isLoadingTasks } = useGetTasks({ workspaceId, status, assigneeId, projectId, dueDate });
+
+
 
     return (
         <Tabs defaultValue={view} onValueChange={setView} className="flex-1 w-full border rounded-lg">
@@ -39,6 +50,7 @@ export const TaskViewSwitcher = () => {
                     </Button>
                 </div>
                 <DottedSeparator className="my-4" />
+                <DataFilters />
                 <DottedSeparator className="my-4" />
                 {isLoadingTasks ? (
                     <div className="w-full border rounded-lg h-[200px] flex flex-col items-center justify-center">
