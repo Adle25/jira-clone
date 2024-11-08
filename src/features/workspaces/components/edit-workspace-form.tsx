@@ -62,11 +62,7 @@ export const EditWorkspaceForm = ({ onCancel, initialValues }: EditWorkspaceForm
             image: values.image instanceof File ? values.image : "",
         };
 
-        mutate({ form: finalValues, param: { workspaceId: initialValues.$id } }, {
-            onSuccess: ({ data }) => {
-                form.reset();
-            }
-        });
+        mutate({ form: finalValues, param: { workspaceId: initialValues.$id } });
     };
 
     const handleDelete = async () => {
