@@ -1,7 +1,7 @@
 import { Task } from "../types";
 import { format, getDay, parse, startOfWeek, addMonths, subMonths } from "date-fns";
 import { Calendar, dateFnsLocalizer } from "react-big-calendar";
-import { enUS, ta } from "date-fns/locale";
+import { enUS } from "date-fns/locale";
 import { useState } from "react";
 import "react-big-calendar/lib/css/react-big-calendar.css";
 import "./data-calendar.css";

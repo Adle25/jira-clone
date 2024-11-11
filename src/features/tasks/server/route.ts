@@ -9,7 +9,6 @@ import { z } from "zod";
 import { Task, TaskStatus } from "../types";
 import { createAdminClient } from "@/lib/appwrite";
 import { Project } from "@/features/projects/types";
-import { error } from "console";
 
 const app = new Hono()
     .get(
